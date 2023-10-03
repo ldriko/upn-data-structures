@@ -1,6 +1,5 @@
 #include <iostream>
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
 
 using namespace std;
@@ -8,6 +7,7 @@ using namespace std;
 struct Customer
 {
    string name;
+   float total;
 };
 
 template <typename T>
@@ -23,6 +23,7 @@ void insertAfter(Node<Customer> **head, Node<Customer> **tail);
 void insertTail(Node<Customer> **head, Node<Customer> **tail);
 void remove(Node<Customer> **head, Node<Customer> **tail);
 void traverse(Node<Customer> *head, bool pause = false);
+void waitEnter();
 
 int main()
 {
@@ -31,7 +32,7 @@ int main()
 
    do
    {
-      system("cls");
+      system("clear");
 
       cout << "Menu Antrian:" << endl;
       cout << "1. Tambah pelanggan di awal" << endl;
@@ -63,10 +64,12 @@ void insertHead(Node<Customer> **head, Node<Customer> **tail)
    Customer customer;
    Node<Customer> *newNode;
 
-   system("cls");
+   system("clear");
 
    cout << "Masukkan nama pelanggan: ";
    cin >> customer.name;
+   cout << "Masukkan total pembelian pelanggan: ";
+   cin >> customer.total;
 
    newNode = new Node<Customer>;
    newNode->value = customer;
@@ -86,17 +89,20 @@ void insertHead(Node<Customer> **head, Node<Customer> **tail)
 
 void insertAfter(Node<Customer> **head, Node<Customer> **tail)
 {
-   string after, name;
+   Customer customer;
    Node<Customer> *newNode, *currentNode;
+   string after;
 
-   system("cls");
+   system("clear");
    traverse(*head);
 
    cout << endl;
    cout << "Setelah pelanggan: ";
    cin >> after;
    cout << "Masukkan nama pelanggan: ";
-   cin >> name;
+   cin >> customer.name;
+   cout << "Masukkan total pembelian pelanggan: ";
+   cin >> customer.total;
    cout << endl;
 
    currentNode = *head;
@@ -109,12 +115,9 @@ void insertAfter(Node<Customer> **head, Node<Customer> **tail)
    if (currentNode == NULL)
    {
       cout << "Pelanggan tidak ditemukan";
-      getch();
+      waitEnter();
       return;
    }
-
-   Customer customer;
-   customer.name = name;
 
    newNode = new Node<Customer>;
    newNode->value = customer;
@@ -130,10 +133,12 @@ void insertTail(Node<Customer> **head, Node<Customer> **tail)
    Customer customer;
    Node<Customer> *newNode;
 
-   system("cls");
+   system("clear");
 
    cout << "Masukkan nama pelanggan: ";
    cin >> customer.name;
+   cout << "Masukkan total pembelian pelanggan: ";
+   cin >> customer.total;
 
    newNode = new Node<Customer>;
    newNode->value = customer;
@@ -155,7 +160,7 @@ void remove(Node<Customer> **head, Node<Customer> **tail)
 {
    string name;
 
-   system("cls");
+   system("clear");
    traverse(*head);
 
    cout << endl
@@ -174,7 +179,7 @@ void remove(Node<Customer> **head, Node<Customer> **tail)
    if (currentNode == NULL)
    {
       cout << "Pelanggan tidak ditemukan";
-      getch();
+      waitEnter();
       return;
    }
 
@@ -199,11 +204,11 @@ void traverse(Node<Customer> *head, bool pause)
 {
    Node<Customer> *currentNode = head;
 
-   system("cls");
+   system("clear");
 
    while (currentNode != NULL)
    {
-      cout << currentNode->value.name;
+      cout << currentNode->value.name << " (" << currentNode->value.total << ")";
       cout << " -> ";
 
       currentNode = currentNode->next;
@@ -212,5 +217,14 @@ void traverse(Node<Customer> *head, bool pause)
    cout << "NULL";
 
    if (pause)
-      getch();
+      waitEnter();
+}
+
+void waitEnter()
+{
+   cout << endl
+        << endl
+        << "Tekan enter untuk melanjutkan...";
+   cin.ignore();
+   cin.get();
 }
