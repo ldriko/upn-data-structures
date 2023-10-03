@@ -22,6 +22,9 @@ void insertHead(Node<Customer> **head, Node<Customer> **tail);
 void insertAfter(Node<Customer> **head, Node<Customer> **tail);
 void insertTail(Node<Customer> **head, Node<Customer> **tail);
 void remove(Node<Customer> **head, Node<Customer> **tail);
+void removeHead(Node<Customer> **head, Node<Customer> **tail);
+void removeAfter(Node<Customer> **head, Node<Customer> **tail);
+void removeTail(Node<Customer> **head, Node<Customer> **tail);
 void traverse(Node<Customer> *head, bool pause = false);
 void waitEnter();
 
@@ -39,7 +42,10 @@ int main()
       cout << "2. Tambah pelanggan di tengah" << endl;
       cout << "3. Tambah pelanggan di akhir" << endl;
       cout << "4. Hapus pelanggan" << endl;
-      cout << "5. Cetak list" << endl;
+      cout << "5. Hapus pelanggan di awal" << endl;
+      cout << "6. Hapus pelanggan di tengah" << endl;
+      cout << "7. Hapus pelanggan di akhir" << endl;
+      cout << "8. Cetak list" << endl;
       cout << "q. Keluar" << endl;
       cout << "Masukkan pilihan: ";
       cin >> pilih;
@@ -53,6 +59,12 @@ int main()
       else if (pilih == '4')
          remove(&head, &tail);
       else if (pilih == '5')
+         removeHead(&head, &tail);
+      else if (pilih == '6')
+         removeAfter(&head, &tail);
+      else if (pilih == '7')
+         removeTail(&head, &tail);
+      else if (pilih == '8')
          traverse(head, true);
    } while (pilih != 'q');
 
@@ -198,6 +210,112 @@ void remove(Node<Customer> **head, Node<Customer> **tail)
    }
 
    delete currentNode;
+}
+
+void removeHead(Node<Customer> **head, Node<Customer> **tail)
+{
+   Node<Customer> *currentNode = *head;
+
+   if (currentNode == NULL)
+   {
+      cout << "Antrian kosong";
+      waitEnter();
+      return;
+   }
+
+   *head = currentNode->next;
+
+   if (currentNode == *tail)
+   {
+      *tail = NULL;
+   }
+
+   delete currentNode;
+
+   cout << "Pelanggan di awal telah dihapus";
+   waitEnter();
+}
+
+void removeAfter(Node<Customer> **head, Node<Customer> **tail)
+{
+   string after;
+
+   system("clear");
+   traverse(*head);
+
+   cout << endl;
+   cout << "Setelah pelanggan: ";
+   cin >> after;
+
+   Node<Customer> *currentNode = *head;
+   Node<Customer> *previousNode = NULL;
+
+   while (currentNode != NULL && currentNode->value.name != after)
+   {
+      previousNode = currentNode;
+      currentNode = currentNode->next;
+   }
+
+   if (currentNode == NULL)
+   {
+      cout << "Pelanggan tidak ditemukan";
+      waitEnter();
+      return;
+   }
+
+   if (previousNode == NULL)
+   {
+      *head = currentNode->next;
+   }
+   else
+   {
+      previousNode->next = currentNode->next;
+   }
+
+   if (currentNode == *tail)
+   {
+      *tail = previousNode;
+   }
+
+   delete currentNode;
+
+   cout << "Pelanggan telah dihapus";
+   waitEnter();
+}
+
+void removeTail(Node<Customer> **head, Node<Customer> **tail)
+{
+   Node<Customer> *currentNode = *head;
+   Node<Customer> *previousNode = NULL;
+
+   if (currentNode == NULL)
+   {
+      cout << "Antrian kosong";
+      waitEnter();
+      return;
+   }
+
+   while (currentNode != *tail)
+   {
+      previousNode = currentNode;
+      currentNode = currentNode->next;
+   }
+
+   if (previousNode == NULL)
+   {
+      *head = NULL;
+   }
+   else
+   {
+      previousNode->next = NULL;
+   }
+
+   *tail = previousNode;
+
+   delete currentNode;
+
+   cout << "Pelanggan di akhir telah dihapus";
+   waitEnter();
 }
 
 void traverse(Node<Customer> *head, bool pause)
