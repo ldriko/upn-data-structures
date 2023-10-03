@@ -25,17 +25,19 @@ void remove(Node<Customer> **head, Node<Customer> **tail);
 void removeHead(Node<Customer> **head, Node<Customer> **tail);
 void removeAfter(Node<Customer> **head, Node<Customer> **tail);
 void removeTail(Node<Customer> **head, Node<Customer> **tail);
+void count(Node<Customer> *head);
+void countTotal(Node<Customer> *head);
 void traverse(Node<Customer> *head, bool pause = false);
 void waitEnter();
 
 int main()
 {
    Node<Customer> *head = NULL, *tail = NULL;
-   char pilih;
+   string pilih;
 
    do
    {
-      system("clear");
+      system("cls");
 
       cout << "Menu Antrian:" << endl;
       cout << "1. Tambah pelanggan di awal" << endl;
@@ -45,28 +47,34 @@ int main()
       cout << "5. Hapus pelanggan di awal" << endl;
       cout << "6. Hapus pelanggan di tengah" << endl;
       cout << "7. Hapus pelanggan di akhir" << endl;
-      cout << "8. Cetak list" << endl;
+      cout << "8. Jumlah pelanggan" << endl;
+      cout << "9. Jumlah total pembelian pelanggan" << endl;
+      cout << "10. Cetak list" << endl;
       cout << "q. Keluar" << endl;
       cout << "Masukkan pilihan: ";
       cin >> pilih;
 
-      if (pilih == '1')
+      if (pilih == "1")
          insertHead(&head, &tail);
-      else if (pilih == '2')
+      else if (pilih == "2")
          insertAfter(&head, &tail);
-      else if (pilih == '3')
+      else if (pilih == "3")
          insertTail(&head, &tail);
-      else if (pilih == '4')
+      else if (pilih == "4")
          remove(&head, &tail);
-      else if (pilih == '5')
+      else if (pilih == "5")
          removeHead(&head, &tail);
-      else if (pilih == '6')
+      else if (pilih == "6")
          removeAfter(&head, &tail);
-      else if (pilih == '7')
+      else if (pilih == "7")
          removeTail(&head, &tail);
-      else if (pilih == '8')
-         traverse(head, true);
-   } while (pilih != 'q');
+      else if (pilih == "8")
+         count(head);
+      else if (pilih == "9")
+         countTotal(head);
+      else if (pilih == "10")
+         traverse(head);
+   } while (pilih != "q");
 
    return 0;
 }
@@ -76,7 +84,7 @@ void insertHead(Node<Customer> **head, Node<Customer> **tail)
    Customer customer;
    Node<Customer> *newNode;
 
-   system("clear");
+   system("cls");
 
    cout << "Masukkan nama pelanggan: ";
    cin >> customer.name;
@@ -105,7 +113,7 @@ void insertAfter(Node<Customer> **head, Node<Customer> **tail)
    Node<Customer> *newNode, *currentNode;
    string after;
 
-   system("clear");
+   system("cls");
    traverse(*head);
 
    cout << endl;
@@ -145,7 +153,7 @@ void insertTail(Node<Customer> **head, Node<Customer> **tail)
    Customer customer;
    Node<Customer> *newNode;
 
-   system("clear");
+   system("cls");
 
    cout << "Masukkan nama pelanggan: ";
    cin >> customer.name;
@@ -172,7 +180,7 @@ void remove(Node<Customer> **head, Node<Customer> **tail)
 {
    string name;
 
-   system("clear");
+   system("cls");
    traverse(*head);
 
    cout << endl
@@ -240,7 +248,7 @@ void removeAfter(Node<Customer> **head, Node<Customer> **tail)
 {
    string after;
 
-   system("clear");
+   system("cls");
    traverse(*head);
 
    cout << endl;
@@ -322,7 +330,7 @@ void traverse(Node<Customer> *head, bool pause)
 {
    Node<Customer> *currentNode = head;
 
-   system("clear");
+   system("cls");
 
    while (currentNode != NULL)
    {
@@ -336,6 +344,42 @@ void traverse(Node<Customer> *head, bool pause)
 
    if (pause)
       waitEnter();
+}
+
+void count(Node<Customer> *head)
+{
+   Node<Customer> *currentNode = head;
+   int count = 0;
+
+   system("cls");
+
+   while (currentNode != NULL)
+   {
+      count++;
+
+      currentNode = currentNode->next;
+   }
+
+   cout << "Jumlah pelanggan: " << count;
+   waitEnter();
+}
+
+void countTotal(Node<Customer> *head)
+{
+   Node<Customer> *currentNode = head;
+   float total = 0;
+
+   system("cls");
+
+   while (currentNode != NULL)
+   {
+      total += currentNode->value.total;
+
+      currentNode = currentNode->next;
+   }
+
+   cout << "Jumlah total pembelian pelanggan: " << total;
+   waitEnter();
 }
 
 void waitEnter()
