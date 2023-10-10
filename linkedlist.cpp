@@ -73,7 +73,7 @@ int main()
       else if (pilih == "9")
          countTotal(head);
       else if (pilih == "10")
-         traverse(head);
+         traverse(head, true);
    } while (pilih != "q");
 
    return 0;
