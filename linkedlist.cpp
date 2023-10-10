@@ -21,9 +21,8 @@ struct Node
 void insertHead(Node<Customer> **head, Node<Customer> **tail);
 void insertAfter(Node<Customer> **head, Node<Customer> **tail);
 void insertTail(Node<Customer> **head, Node<Customer> **tail);
-void remove(Node<Customer> **head, Node<Customer> **tail);
 void removeHead(Node<Customer> **head, Node<Customer> **tail);
-void removeAfter(Node<Customer> **head, Node<Customer> **tail);
+void remove(Node<Customer> **head, Node<Customer> **tail);
 void removeTail(Node<Customer> **head, Node<Customer> **tail);
 void count(Node<Customer> *head);
 void countTotal(Node<Customer> *head);
@@ -43,13 +42,12 @@ int main()
       cout << "1. Tambah pelanggan di awal" << endl;
       cout << "2. Tambah pelanggan di tengah" << endl;
       cout << "3. Tambah pelanggan di akhir" << endl;
-      cout << "4. Hapus pelanggan" << endl;
-      cout << "5. Hapus pelanggan di awal" << endl;
-      cout << "6. Hapus pelanggan di tengah" << endl;
-      cout << "7. Hapus pelanggan di akhir" << endl;
-      cout << "8. Jumlah pelanggan" << endl;
-      cout << "9. Jumlah total pembelian pelanggan" << endl;
-      cout << "10. Cetak list" << endl;
+      cout << "4. Hapus pelanggan di awal" << endl;
+      cout << "5. Hapus pelanggan di tengah" << endl;
+      cout << "6. Hapus pelanggan di akhir" << endl;
+      cout << "7. Jumlah pelanggan" << endl;
+      cout << "8. Jumlah total pembelian pelanggan" << endl;
+      cout << "9. Cetak list" << endl;
       cout << "q. Keluar" << endl;
       cout << "Masukkan pilihan: ";
       cin >> pilih;
@@ -60,12 +58,10 @@ int main()
          insertAfter(&head, &tail);
       else if (pilih == "3")
          insertTail(&head, &tail);
-      else if (pilih == "4")
-         remove(&head, &tail);
       else if (pilih == "5")
          removeHead(&head, &tail);
       else if (pilih == "6")
-         removeAfter(&head, &tail);
+         remove(&head, &tail);
       else if (pilih == "7")
          removeTail(&head, &tail);
       else if (pilih == "8")
@@ -176,50 +172,6 @@ void insertTail(Node<Customer> **head, Node<Customer> **tail)
    }
 }
 
-void remove(Node<Customer> **head, Node<Customer> **tail)
-{
-   string name;
-
-   system("cls");
-   traverse(*head);
-
-   cout << endl
-        << "Masukkan nama pelanggan yang ingin dihapus: ";
-   cin >> name;
-
-   Node<Customer> *currentNode = *head;
-   Node<Customer> *previousNode = NULL;
-
-   while (currentNode != NULL && currentNode->value.name != name)
-   {
-      previousNode = currentNode;
-      currentNode = currentNode->next;
-   }
-
-   if (currentNode == NULL)
-   {
-      cout << "Pelanggan tidak ditemukan";
-      waitEnter();
-      return;
-   }
-
-   if (previousNode == NULL)
-   {
-      *head = currentNode->next;
-   }
-   else
-   {
-      previousNode->next = currentNode->next;
-   }
-
-   if (currentNode == *tail)
-   {
-      *tail = previousNode;
-   }
-
-   delete currentNode;
-}
-
 void removeHead(Node<Customer> **head, Node<Customer> **tail)
 {
    Node<Customer> *currentNode = *head;
@@ -244,7 +196,7 @@ void removeHead(Node<Customer> **head, Node<Customer> **tail)
    waitEnter();
 }
 
-void removeAfter(Node<Customer> **head, Node<Customer> **tail)
+void remove(Node<Customer> **head, Node<Customer> **tail)
 {
    string after;
 
