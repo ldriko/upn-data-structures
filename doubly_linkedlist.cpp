@@ -285,7 +285,6 @@ void removeTail(Node<Customer> **head, Node<Customer> **tail)
    else
    {
       currentNode->prev->next = NULL;
-      currentNode->prev = NULL;
    }
 
    *tail = currentNode->prev;
