@@ -105,7 +105,7 @@ int main()
         }
         else if (choice == 3)
         {
-            print(q);r
+            print(q);
             wait();
         }
     } while (choice != 4);
